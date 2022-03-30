@@ -19,9 +19,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
-    <Folder Include="Dal\Repositories\" />
-    <Folder Include="Interfaces\" />
     <Folder Include="ViewModels\" />
   </ItemGroup>
 

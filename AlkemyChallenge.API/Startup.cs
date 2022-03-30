@@ -1,4 +1,6 @@
 using AlkemyChallenge.API.Dal;
+using AlkemyChallenge.API.Dal.Repositories;
+using AlkemyChallenge.API.Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -35,7 +37,13 @@ namespace AlkemyChallenge.API
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "AlkemyChallenge.API", Version = "v1" });
             });
 
+            //Contexto de Db
             services.AddDbContext<DisneyWorldContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DisneyWorldConnectionString")));
+
+            //Repositorios
+            services.AddScoped<IGenreRepository, GenreRepository>();
+            services.AddScoped<IMovieRepository, MovieRepository>();
+            services.AddScoped<ICharacterRepository, CharacterRepository>();
 
 
 

@@ -12,7 +12,7 @@ namespace AlkemyChallenge.API.Models
         public int Age { get; set; }
         public double Weight { get; set; }
         public string History { get; set; }
-        //Falta relación con peliculas (muchos a muchos)
+        //Relación con peliculas (muchos a muchos)
         public ICollection<CharacterMovie> Movies { get; set; }
 
     }

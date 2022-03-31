@@ -31,8 +31,7 @@ namespace AlkemyChallenge.API.Migrations
                     GenreId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     GenreName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    GenreImage = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    MovieId = table.Column<int>(type: "int", nullable: false)
+                    GenreImage = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -63,7 +62,7 @@ namespace AlkemyChallenge.API.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "CharacterMovie",
+                name: "CharactersMovies",
                 columns: table => new
                 {
                     CharacterId = table.Column<int>(type: "int", nullable: false),
@@ -71,15 +70,15 @@ namespace AlkemyChallenge.API.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_CharacterMovie", x => new { x.CharacterId, x.MovieId });
+                    table.PrimaryKey("PK_CharactersMovies", x => new { x.CharacterId, x.MovieId });
                     table.ForeignKey(
-                        name: "FK_CharacterMovie_Characters_CharacterId",
+                        name: "FK_CharactersMovies_Characters_CharacterId",
                         column: x => x.CharacterId,
                         principalTable: "Characters",
                         principalColumn: "CharacterId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_CharacterMovie_Movies_MovieId",
+                        name: "FK_CharactersMovies_Movies_MovieId",
                         column: x => x.MovieId,
                         principalTable: "Movies",
                         principalColumn: "MovieId",
@@ -87,8 +86,8 @@ namespace AlkemyChallenge.API.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_CharacterMovie_MovieId",
-                table: "CharacterMovie",
+                name: "IX_CharactersMovies_MovieId",
+                table: "CharactersMovies",
                 column: "MovieId");
 
             migrationBuilder.CreateIndex(
@@ -100,7 +99,7 @@ namespace AlkemyChallenge.API.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "CharacterMovie");
+                name: "CharactersMovies");
 
             migrationBuilder.DropTable(
                 name: "Characters");

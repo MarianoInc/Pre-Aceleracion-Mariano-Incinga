@@ -14,9 +14,9 @@ namespace AlkemyChallenge.API.Models
         public int Rating { get; set; }
         //Relación con género (Uno-a-muchos)
         public int GenreId { get; set; }
-        public Genre Genres  { get; set; }
+        public Genre Genre  { get; set; }
 
-        //Falta la relación con los personajes (Muchos-a-muchos) 
+        //Relación con los personajes (Muchos-a-muchos) 
         public ICollection<CharacterMovie> Characters { get; set; }
     }
 }

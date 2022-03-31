@@ -1,6 +1,7 @@
 ﻿using AlkemyChallenge.API.Interfaces;
 using AlkemyChallenge.API.Models;
 using AlkemyChallenge.API.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -9,8 +10,9 @@ using System.Linq;
 
 namespace AlkemyChallenge.API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/characters")]
     [ApiController]
+    [Authorize(AuthenticationSchemes = "Bearer")]
     public class CharactersController : ControllerBase
     {
         protected readonly ICharacterRepository _characterRepository;
@@ -21,9 +23,9 @@ namespace AlkemyChallenge.API.Controllers
         }
 
         [HttpGet]
-        public IActionResult Get(int? age, int? movies, string name = "")
+        public IActionResult Get(int? age, /*int? movies,*/ string name = "")
         {
-            var response = Filter(age, movies, name);
+            var response = Filter(age, /*movies,*/ name);
             return Ok(response);
         }
 
@@ -67,7 +69,7 @@ namespace AlkemyChallenge.API.Controllers
         }
 
         //Filtro del modelo de Personajes
-        private List<CharacterResponseViewModel> Filter(int? age, int? movies, string name = "")
+        private List<CharacterResponseViewModel> Filter(int? age, /*int? movies,*/ string name = "")
         {
             var selectMethod = _characterRepository.GetAllEntities();
             var response = new List<CharacterResponseViewModel>();
@@ -91,16 +93,17 @@ namespace AlkemyChallenge.API.Controllers
                                         })
                                         .ToList();
             }
-            else if (movies.HasValue)
-            {
+            //No fue probado.
+            //else if (movies.HasValue)
+            //{
 
-                response = selectMethod.Where(c => c.Movies.Any(m => m.MovieId == movies))
-                                        .Select(c => new CharacterResponseViewModel
-                                        {
-                                            CharacterImage = c.CharacterImage,
-                                            CharacterName = c.CharacterName
-                                        }).ToList();
-            }
+            //    response = selectMethod.Where(c => c.Movies.Any(m => m.MovieId == movies))
+            //                            .Select(c => new CharacterResponseViewModel
+            //                            {
+            //                                CharacterImage = c.CharacterImage,
+            //                                CharacterName = c.CharacterName
+            //                            }).ToList();
+            //}
             else
             {
                 response = selectMethod.Select(c => new CharacterResponseViewModel

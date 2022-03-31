@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AlkemyChallenge.API.Migrations
 {
     [DbContext(typeof(DisneyWorldContext))]
-    [Migration("20220330210843_CreateDisneyWorldDb")]
+    [Migration("20220331161623_CreateDisneyWorldDb")]
     partial class CreateDisneyWorldDb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -60,7 +60,7 @@ namespace AlkemyChallenge.API.Migrations
 
                     b.HasIndex("MovieId");
 
-                    b.ToTable("CharacterMovie");
+                    b.ToTable("CharactersMovies");
                 });
 
             modelBuilder.Entity("AlkemyChallenge.API.Models.Genre", b =>
@@ -75,9 +75,6 @@ namespace AlkemyChallenge.API.Migrations
 
                     b.Property<string>("GenreName")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("MovieId")
-                        .HasColumnType("int");
 
                     b.HasKey("GenreId");
 
@@ -134,13 +131,13 @@ namespace AlkemyChallenge.API.Migrations
 
             modelBuilder.Entity("AlkemyChallenge.API.Models.Movie", b =>
                 {
-                    b.HasOne("AlkemyChallenge.API.Models.Genre", "Genres")
+                    b.HasOne("AlkemyChallenge.API.Models.Genre", "Genre")
                         .WithMany("Movies")
                         .HasForeignKey("GenreId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Genres");
+                    b.Navigation("Genre");
                 });
 
             modelBuilder.Entity("AlkemyChallenge.API.Models.Character", b =>

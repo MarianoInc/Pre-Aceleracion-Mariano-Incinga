@@ -1,5 +1,6 @@
 ﻿using AlkemyChallenge.API.Interfaces;
 using AlkemyChallenge.API.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
@@ -8,6 +9,7 @@ namespace AlkemyChallenge.API.Controllers
 {
     [Route("api/genres")]
     [ApiController]
+    [Authorize(AuthenticationSchemes = "Bearer")]
     public class GenresController : ControllerBase
     {
         protected readonly IGenreRepository _genreRepository;

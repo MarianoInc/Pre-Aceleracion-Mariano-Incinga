@@ -2,6 +2,7 @@
 using AlkemyChallenge.API.Interfaces;
 using AlkemyChallenge.API.Models;
 using AlkemyChallenge.API.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -12,6 +13,7 @@ namespace AlkemyChallenge.API.Controllers
 {
     [Route("api/movies")]
     [ApiController]
+    [Authorize(AuthenticationSchemes = "Bearer")]
     public class MoviesController : ControllerBase
     {
         protected readonly IMovieRepository _movieRepository;
@@ -71,6 +73,7 @@ namespace AlkemyChallenge.API.Controllers
         {
             var selectMethod = _movieRepository.GetAllEntities();
             var response = new List<MovieResponseViewModel>();
+
             if (!String.IsNullOrEmpty(name))
             {
                 response = selectMethod.Where(movie => movie.Title.ToUpper() == name.ToUpper())
@@ -84,7 +87,7 @@ namespace AlkemyChallenge.API.Controllers
             }
             else if (genre.HasValue)
             {
-                response = selectMethod.Where(movie => movie.Genres.GenreId == genre)
+                response = selectMethod.Where(movie => movie.GenreId == genre)
                                         .Select(movie => new MovieResponseViewModel
                                         {
                                             MovieImage = movie.MovieImage,
@@ -102,18 +105,23 @@ namespace AlkemyChallenge.API.Controllers
                     CreationDate = movie.CreationDate
                 }).ToList();
             }
-            
+
+
             order = order.ToUpper() == "ASC" ? "DESC" : "ASC";
-            
+            var orderedList = from m in response select m;
+                
             switch (order)
             {
                 case "DESC":
-                    response = (List<MovieResponseViewModel>)response.OrderByDescending(r => r.CreationDate);
+                    orderedList = orderedList.OrderByDescending(m => m.CreationDate);
                     break;
                 default:
-                    response = (List<MovieResponseViewModel>)response.OrderBy(r => r.CreationDate);
+                    orderedList = orderedList.OrderBy(m => m.CreationDate);
                     break;
             }
+
+            response = orderedList.ToList();
+
             return response;
 
         }

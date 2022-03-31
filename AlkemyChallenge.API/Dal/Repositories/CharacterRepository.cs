@@ -1,5 +1,7 @@
 ﻿using AlkemyChallenge.API.Interfaces;
 using AlkemyChallenge.API.Models;
+using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 
 namespace AlkemyChallenge.API.Dal.Repositories
 {

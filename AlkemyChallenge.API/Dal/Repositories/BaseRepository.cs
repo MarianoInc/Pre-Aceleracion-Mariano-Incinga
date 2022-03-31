@@ -15,7 +15,7 @@ namespace AlkemyChallenge.API.Dal.Repositories
         }
 
 
-        public List<TEntity> GetAllEntities()
+        public virtual List<TEntity> GetAllEntities()
         {
             return _dbContext.Set<TEntity>().ToList();
         }

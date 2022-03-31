@@ -34,6 +34,7 @@ namespace AlkemyChallenge.API.Dal
 
         public DbSet<Movie> Movies { get; set; }
         public DbSet<Character> Characters { get; set; }
+        public DbSet<CharacterMovie> CharactersMovies  { get; set; }
         public DbSet<Genre> Genres { get; set; }
 
     }
